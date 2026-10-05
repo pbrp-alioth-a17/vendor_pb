@@ -12,3 +12,8 @@ recovery_only(`
   allow unlabeled unlabeled:filesystem associate;
   allow vendor_init rootfs:dir read;
 ')
+
+# Recovery user-build adbd explicitly changes to the shell domain.
+recovery_only(`
+  allow adbd self:process setcurrent;
+')
