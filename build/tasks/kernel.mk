@@ -1,3 +1,5 @@
+# Use the platform kernel build rules when present; do not define duplicate targets.
+ifeq ($(wildcard vendor/lineage/build/tasks/kernel.mk),)
 # Copyright (C) 2012 The CyanogenMod Project
 #           (C) 2017-2021 The LineageOS Project
 #
@@ -428,3 +430,5 @@ dtbimage: $(INSTALLED_DTBIMAGE_TARGET)
 
 endif # TARGET_NO_KERNEL_OVERRIDE
 endif # TARGET_NO_KERNEL
+
+endif # standalone PBRP kernel build rules

@@ -27,7 +27,6 @@ cc_library {
     shared_libs: [
         "libbase",
         "libcutils",
-        "libkeyutils",
         "liblogwrap",
     ],
 }

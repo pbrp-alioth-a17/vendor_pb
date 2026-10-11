@@ -7,6 +7,7 @@ EXPORT_TO_SOONG := \
     KERNEL_MAKE_FLAGS \
     TARGET_KERNEL_CONFIG \
     TARGET_KERNEL_HEADERS_SOURCE \
+    TW_USE_FSCRYPT_POLICY \
     TW_THEME \
     TW_CUSTOM_THEME \
     DEVICE_RESOLUTION \
@@ -94,7 +95,6 @@ SOONG_CONFIG_pbrpGlobalVars += \
     tw_max_brightness
 
 # Defaults
-TW_OZIP_DECRYPT_KEY ?= 0
 TARGET_RECOVERY_OVERSCAN_PERCENT ?= 0
 TW_X_OFFSET ?= 0
 TW_Y_OFFSET ?= 0
@@ -113,7 +113,7 @@ SOONG_CONFIG_pbrpGlobalVars_supports_hw_fde_perf := $(TARGET_HW_DISK_ENCRYPTION_
 SOONG_CONFIG_pbrpGlobalVars_tw_delay_touch_init_ms := $(TW_DELAY_TOUCH_INIT_MS)
 SOONG_CONFIG_pbrpGlobalVars_tw_event_logging := $(TW_EVENT_LOGGING)
 SOONG_CONFIG_pbrpGlobalVars_tw_use_key_code_touch_sync := $(TW_USE_KEY_CODE_TOUCH_SYNC)
-SOONG_CONFIG_pbrpGlobalVars_tw_ozip_decrypt_key := $(subst ",, $(TW_OZIP_DECRYPT_KEY))
+SOONG_CONFIG_pbrpGlobalVars_tw_ozip_decrypt_key := $(if $(strip $(TW_OZIP_DECRYPT_KEY)),$(subst ",, $(TW_OZIP_DECRYPT_KEY)),0)
 SOONG_CONFIG_pbrpGlobalVars_tw_no_screen_blank := $(TW_NO_SCREEN_BLANK)
 SOONG_CONFIG_pbrpGlobalVars_tw_no_screen_timeout := $(TW_NO_SCREEN_TIMEOUT)
 SOONG_CONFIG_pbrpGlobalVars_tw_oem_build := $(TW_OEM_BUILD)
@@ -160,3 +160,7 @@ TARGET_INIT_VENDOR_LIB ?= vendor_init
 
 # Soong value variables
 SOONG_CONFIG_pbrpGlobalVars_target_init_vendor_lib := $(TARGET_INIT_VENDOR_LIB)
+
+# Android 17 uses the platform kernel header generator.
+$(call add_soong_config_namespace,lineageVarsPlugin)
+$(foreach v,KERNEL_ARCH KERNEL_BUILD_OUT_PREFIX KERNEL_CROSS_COMPILE KERNEL_MAKE_CMD KERNEL_MAKE_FLAGS KERNEL_PATH PATH_OVERRIDE_SOONG TARGET_KERNEL_CONFIG TARGET_KERNEL_SOURCE TARGET_KERNEL_PLATFORM_TARGET TARGET_MAX_PAGE_SIZE_SUPPORTED TARGET_PREBUILT_KERNEL_HEADERS,$(eval $(call add_soong_config_var,lineageVarsPlugin,$(v))))

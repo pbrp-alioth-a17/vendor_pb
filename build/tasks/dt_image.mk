@@ -1,3 +1,5 @@
+# Use the platform kernel build rules when present; do not define duplicate targets.
+ifeq ($(wildcard vendor/lineage/build/tasks/dt_image.mk),)
 #----------------------------------------------------------------------
 # Generate device tree image (dt.img)
 #----------------------------------------------------------------------
@@ -63,3 +65,5 @@ dtimage: $(INSTALLED_DTIMAGE_TARGET)
 
 endif
 endif
+
+endif # standalone PBRP kernel build rules

@@ -22,7 +22,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
     net.tethering.noprovisioning=true
 
 CODE := $(PB_CODE)
+ifneq ($(strip $(TARGET_VENDOR)),)
+ifneq ($(strip $(CODE)),)
 MAINTAINER := $(shell python3 vendor/utils/pb_devices.py verify $(TARGET_VENDOR) $(CODE) true)
+endif
+endif
 TW_THEME := portrait_hdpi
 
 # PBRP specific build flags
