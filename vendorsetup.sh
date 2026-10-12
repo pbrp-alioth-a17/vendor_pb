@@ -1,1 +1,4 @@
-alias twrppick='./vendor/pb/repopick.py -g https://gerrit.twrp.me'
+alias twrppick='repopick -g https://gerrit.twrp.me'
+
+# Extend the standard platform environment without replacing lunch or m.
+source "$(gettop)/vendor/pb/build/envsetup.sh"
